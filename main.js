@@ -282,6 +282,7 @@ function update(milliseconds) {
     if (MOBILE) {
         const rad = box * 5
         const blob = box
+        const duck = box * 3
         const x = box + rad
         const y = cvs.height - box - rad
         const s = Math.PI / 6
@@ -339,6 +340,11 @@ function update(milliseconds) {
         ctx.beginPath()
         ctx.arc(padBlob.x, padBlob.y, blob * .7, 0, Math.PI * 2)
         ctx.fill()
+
+        ctx.fillStyle = '#dfe3'
+        ctx.beginPath()
+        ctx.arc(cvs.width - box - duck, cvs.height - box - duck, duck, 0, Math.PI * 2)
+        ctx.fill()
     }
 
     if (end) {
@@ -394,7 +400,7 @@ const key = {
 const padBlob = {x: 0, y: 0}
 let end = 0
 let start = false
-let blaze = 0
+let blaze = 1
 let blazeSpeed = 0
 let blazeY = 0
 let know = 0
