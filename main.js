@@ -27,7 +27,7 @@ function update(milliseconds) {
 
     // get time between frames for deltatime
     DT = milliseconds - (time * 16)
-    time = (milliseconds / 16)
+    time += DT//(milliseconds / 16)
     // don't normalise speed if framerate is lower than 60fps
     if (DT > 1) DT = 1
 
@@ -302,13 +302,13 @@ function update(milliseconds) {
             padBlob.y = y
         }
 
-        if (mp && mm) {
+        if (mm) {
             key.up = false
             key.down = false
             key.left = false
             key.right = false
 
-            if (max > box * 1.5) {
+            if (mp && max > box * 1.5) {
                 // right
                 if (padBlob.ang > -s * 2 && padBlob.ang < s * 2)
                     key.right = true
