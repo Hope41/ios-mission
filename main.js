@@ -302,13 +302,13 @@ function update(milliseconds) {
             padBlob.y = y
         }
 
-        if (mm) {
+        if (mp && mm) {
             key.up = false
             key.down = false
             key.left = false
             key.right = false
 
-            if (max > box * 2.5) {
+            if (max > box * 1.5) {
                 // right
                 if (padBlob.ang > -s * 2 && padBlob.ang < s * 2)
                     key.right = true
