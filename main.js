@@ -27,9 +27,9 @@ function update(milliseconds) {
 
     // get time between frames for deltatime
     DT = milliseconds - (time * 16)
-    time += DT//(milliseconds / 16)
     // don't normalise speed if framerate is lower than 60fps
     if (DT > 1) DT = 1
+    time += DT//(milliseconds / 16)
 
     dt = DT
 
