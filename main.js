@@ -298,18 +298,18 @@ function update(milliseconds) {
 
         ctx.fillStyle = '#dfe3'
         ctx.beginPath()
-        ctx.arc(x1, y, rad, 0, Math.PI)
+        ctx.arc(x1, y, rad, -Math.PI / 2, Math.PI / 2)
         ctx.fill()
-        ctx.fillStyle = '#dfe8'
+        ctx.fillStyle = '#dfe6'
         ctx.beginPath()
-        ctx.arc(x1, y, rad, Math.PI, 0)
+        ctx.arc(x1, y, rad, Math.PI / 2, -Math.PI / 2)
         ctx.fill()
 
         ctx.fillStyle = '#dfe3'
         ctx.beginPath()
         ctx.arc(x2, y, rad, 0, Math.PI)
         ctx.fill()
-        ctx.fillStyle = '#dfe8'
+        ctx.fillStyle = '#dfe6'
         ctx.beginPath()
         ctx.arc(x2, y, rad, Math.PI, 0)
         ctx.fill()
