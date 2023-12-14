@@ -297,7 +297,7 @@ function update(milliseconds) {
         padBlob.x = x + Math.cos(smoothAng) * max
         padBlob.y = y + Math.sin(smoothAng) * max
 
-        if (key.press) {
+        if (key.press || !mp) {
             padBlob.x = x
             padBlob.y = y
         }
