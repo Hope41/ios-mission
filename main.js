@@ -501,9 +501,8 @@ addEventListener('touchstart', e => {
 })
 
 addEventListener('mouseup', () => mp = false)
-addEventListener('touchend', () => {
-    mp = false
-})
+addEventListener('touchend', () => mp = false)
+addEventListener('touchleave', () => mp = false)
 
 addEventListener('mousemove', e => MOVE(e.clientX, e.clientY))
 addEventListener('touchmove', e => touchMove(e))
