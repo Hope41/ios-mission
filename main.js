@@ -280,28 +280,10 @@ function update(milliseconds) {
 
     // MOBILE CONTROL PAD
     if (MOBILE) {
-        const rad = box * 5
-        const blob = box
-        const duck = box * 3
-        const x = box + rad
+        const rad = box * 3
+        const x1 = box + rad
+        const x2 = cvs.width - box - rad
         const y = cvs.height - box - rad
-        const s = Math.PI / 6
-        const MX = mx + mvx * 5
-        const MY = my + mvy * 5
-
-        let max = Math.hypot(mx - x, my - y)
-        if (max > rad - blob)
-            max = rad - blob
-
-        padBlob.ang = Math.atan2(MY - y, MX - x)
-        const smoothAng = Math.atan2(my - y, mx - x)
-        padBlob.x = x + Math.cos(smoothAng) * max
-        padBlob.y = y + Math.sin(smoothAng) * max
-
-        if (key.press || !mp) {
-            padBlob.x = x
-            padBlob.y = y
-        }
 
         if (mm) {
             key.up = false
@@ -309,41 +291,27 @@ function update(milliseconds) {
             key.left = false
             key.right = false
 
-            if (mp && max > box * 1.5) {
-                // right
-                if (padBlob.ang > -s * 2 && padBlob.ang < s * 2)
-                    key.right = true
-
-                // left
-                else if (padBlob.ang > Math.PI - s * 2 || padBlob.ang < -Math.PI + s * 2)
-                    key.left = true
-
-                // up
-                if (padBlob.ang > -Math.PI + s && padBlob.ang < -s)
-                    key.up = true
-
-                // down
-                if (padBlob.ang > s && padBlob.ang < Math.PI - s)
-                    key.down = true
+            if (mp) {
+                
             }
         }
 
         ctx.fillStyle = '#dfe3'
         ctx.beginPath()
-        ctx.arc(x, y, rad, 0, Math.PI * 2)
+        ctx.arc(x1, y, rad, 0, Math.PI)
         ctx.fill()
-        ctx.fillStyle = '#dfe'
+        ctx.fillStyle = '#dfe8'
         ctx.beginPath()
-        ctx.arc(padBlob.x, padBlob.y, blob, 0, Math.PI * 2)
-        ctx.fill()
-        ctx.fillStyle = '#acb'
-        ctx.beginPath()
-        ctx.arc(padBlob.x, padBlob.y, blob * .7, 0, Math.PI * 2)
+        ctx.arc(x1, y, rad, Math.PI, 0)
         ctx.fill()
 
         ctx.fillStyle = '#dfe3'
         ctx.beginPath()
-        ctx.arc(cvs.width - box - duck, cvs.height - box - duck, duck, 0, Math.PI * 2)
+        ctx.arc(x2, y, rad, 0, Math.PI)
+        ctx.fill()
+        ctx.fillStyle = '#dfe8'
+        ctx.beginPath()
+        ctx.arc(x2, y, rad, Math.PI, 0)
         ctx.fill()
     }
 
