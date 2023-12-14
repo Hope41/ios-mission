@@ -1,3 +1,3 @@
 # Io's Mission
-The new online adventure game!
+Currently under beta testing, bug fixing, and mobile implementation.
 To be released on my website in a day or two.
