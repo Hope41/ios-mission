@@ -280,63 +280,31 @@ function update(milliseconds) {
 
     // MOBILE CONTROL PAD
     if (MOBILE || 1) {
-        const rad = box * 3
-        const x1 = box + rad
-        const x2 = cvs.width - box - rad
-        const y = cvs.height - box - rad
-        const mouse = {x:mx,y:my,w:0,h:0}
-
-        const pressPad = bool => {
-            const PRESS = b => {
-                if (collide(mouse, {x:x1-rad,y:y-rad,w:rad,h:rad*2}))
-                    key.left = b
-                if (collide(mouse, {x:x1,y:y-rad,w:rad,h:rad*2}))
-                    key.right = b
-                if (collide(mouse, {x:x2-rad,y:y-rad,w:rad*2,h:rad}))
-                    key.up = b
-                if (collide(mouse, {x:x2-rad,y:y,w:rad*2,h:rad}))
-                    key.down = b
-            }
-
-            PRESS(bool)
-
-            if (bool) {
-                // got position of mouse on first click
-                if (_mp) {
-                    _mx = mouse.x
-                    _my = mouse.y
-                }
-            }
-            else {
-                mouse.x = _mx
-                mouse.y = _my
-                PRESS(false)
-            }
-        }
-
-        if (mp) pressPad(true)
-        else pressPad(false)
+        PADRAD = box * 3
+        x1PAD = box + PADRAD
+        x2PAD = cvs.width - box - PADRAD
+        yPAD = cvs.height - box - PADRAD
 
         ctx.fillStyle = '#dfe3'
         if (key.right) ctx.fillStyle = '#dfe4'
         ctx.beginPath()
-        ctx.arc(x1, y, rad, -Math.PI / 2, Math.PI / 2)
+        ctx.arc(x1PAD, yPAD, PADRAD, -Math.PI / 2, Math.PI / 2)
         ctx.fill()
         ctx.fillStyle = '#dfe6'
         if (key.left) ctx.fillStyle = '#dfe5'
         ctx.beginPath()
-        ctx.arc(x1, y, rad, Math.PI / 2, -Math.PI / 2)
+        ctx.arc(x1PAD, yPAD, PADRAD, Math.PI / 2, -Math.PI / 2)
         ctx.fill()
 
         ctx.fillStyle = '#dfe3'
         if (key.down) ctx.fillStyle = '#dfe4'
         ctx.beginPath()
-        ctx.arc(x2, y, rad, 0, Math.PI)
+        ctx.arc(x2PAD, yPAD, PADRAD, 0, Math.PI)
         ctx.fill()
         ctx.fillStyle = '#dfe6'
         if (key.up) ctx.fillStyle = '#dfe5'
         ctx.beginPath()
-        ctx.arc(x2, y, rad, Math.PI, 0)
+        ctx.arc(x2PAD, yPAD, PADRAD, Math.PI, 0)
         ctx.fill()
     }
 
@@ -390,6 +358,11 @@ const key = {
     right: false,
     press: false
 }
+
+let PADRAD = 0
+let x1PAD = 0
+let x2PAD = 0
+let yPAD = 0
 
 const padBlob = {x: 0, y: 0}
 let end = 0
@@ -461,7 +434,7 @@ const collect = new Audio('coin.wav')
 const dash = new Audio('dash.wav')
 const spin = new Audio('spin.wav')
 const tone = new Audio('tone.wav')
-const Sound = {}
+const SOUND = {}
 
 function muteSound(bool) {
     song.muted = bool
@@ -472,9 +445,25 @@ function muteSound(bool) {
     dash.muted = bool
     spin.muted = bool
     tone.muted = bool
-    Sound.muted = bool
+    SOUND.muted = bool
 }
 muteSound(true)
+
+function mobileControls(touches, bool) {
+    for (let i = 0; i < touches.length; i ++) {
+        const touch = touches[i]
+        const mouse = {x:touch.clientX*dpr,y:touch.clientY*dpr,w:0,h:0}
+
+        if (collide(mouse, {x:x1PAD-PADRAD,y:yPAD-PADRAD,w:PADRAD,h:PADRAD*2}))
+            key.left = bool
+        if (collide(mouse, {x:x1PAD,y:yPAD-PADRAD,w:PADRAD,h:PADRAD*2}))
+            key.right = bool
+        if (collide(mouse, {x:x2PAD-PADRAD,y:yPAD-PADRAD,w:PADRAD*2,h:PADRAD}))
+            key.up = bool
+        if (collide(mouse, {x:x2PAD-PADRAD,y:yPAD,w:PADRAD*2,h:PADRAD}))
+            key.down = bool
+    }
+}
 
 function MOVE(x, y) {
     mx = x * dpr
@@ -489,20 +478,23 @@ function touchMove(e) {
     MOVE(touch.pageX, touch.pageY)
 }
 
-addEventListener('mousedown', () => {
-    mp = true
-    _mp = true
-})
 addEventListener('touchstart', e => {
     mp = true
     _mp = true
     touchMove(e)
+    mobileControls(e.touches, true)
 })
-
-addEventListener('mouseup', () => mp = false)
-addEventListener('touchend', () => mp = false)
+addEventListener('touchend', e => {
+    mp = false
+    mobileControls(e.touches, false)
+})
 addEventListener('touchleave', () => mp = false)
 
+addEventListener('mousedown', () => {
+    mp = true
+    _mp = true
+})
+addEventListener('mouseup', () => mp = false)
 addEventListener('mousemove', e => MOVE(e.clientX, e.clientY))
 addEventListener('touchmove', e => touchMove(e))
 

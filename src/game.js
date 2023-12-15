@@ -202,7 +202,7 @@ class Game {
             document.body.style.cursor = 'pointer'
             volHover = true
             if (mp) {
-                if (Sound.muted) {
+                if (SOUND.muted) {
                     muteSound(false)
                     song.play()
                     song.loop = true
@@ -231,7 +231,7 @@ class Game {
         ctx.fillRect(volx + box * 1.3, HELPGAP + box * .7, box * .15, box * .6)
         ctx.fillRect(volx + box * 1.6, HELPGAP + box * .6, box * .15, box * .8)
 
-        if (Sound.muted) {
+        if (SOUND.muted) {
             ctx.strokeStyle = '#a00'
             ctx.lineWidth = box * .3
             ctx.beginPath()

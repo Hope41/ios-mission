@@ -650,7 +650,7 @@ class Map {
 
         const staff = new Staff(15, 33, true)
         staff.control = () => {
-            if (hero.x > staff.x - 3) {
+            if (hero.x > staff.x - 3 && !spoken['staff2PASS1']) {
                 hero.x = staff.x - 3
                 if (!hero.in_air) say('staff2PASS1', staff)
             }
@@ -696,7 +696,7 @@ class Map {
 
         const staff = new Staff(15, 33, false)
         staff.control = () => {
-            if (hero.x < staff.x + 3) {
+            if (hero.x < staff.x + 3 && !spoken['staff3PASS1']) {
                 hero.x = staff.x + 3
                 if (!hero.in_air) say('staff3PASS1', staff)
             }
@@ -741,7 +741,7 @@ class Map {
 
         const staff = new Staff(10, 33)
         staff.control = () => {
-            if (hero.x > staff.x - 3) {
+            if (hero.x > staff.x - 3 && !spoken['staff4PASS1']) {
                 hero.x = staff.x - 3
                 if (!hero.in_air) say('staff4PASS1', staff)
             }
@@ -786,7 +786,7 @@ class Map {
 
         const staff = new Staff(20, 33, true)
         staff.control = () => {
-            if (hero.x > staff.x - 3) {
+            if (hero.x > staff.x - 3 && !spoken['staff5PASS1']) {
                 hero.x = staff.x - 3
                 if (!hero.in_air) say('staff5PASS1', staff)
             }
@@ -827,7 +827,7 @@ class Map {
 
         const staff = new Staff(20, 33)
         staff.control = () => {
-            if (hero.x > staff.x - 3) {
+            if (hero.x > staff.x - 3 && !spoken['staff6PASS1']) {
                 hero.x = staff.x - 3
                 if (!hero.in_air) say('staff6PASS1', staff)
             }
