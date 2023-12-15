@@ -1,3 +1,5 @@
+/* Io's Mission Copyright 2023. Play the game at JoachimFord.uk */
+
 'use strict'
 function resize() {
     cvs.width = innerWidth * dpr
@@ -366,7 +368,7 @@ let yPAD = 0
 const padBlob = {x: 0, y: 0}
 let end = 0
 let start = false
-let blaze = 0
+let blaze = 1
 let blazeSpeed = 0
 let blazeY = 0
 let know = 0
