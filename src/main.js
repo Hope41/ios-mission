@@ -343,7 +343,6 @@ function update(milliseconds) {
     else game.totalMinutes = Math.ceil((time / 600) + game.timeOft)
 
     mm = false
-    _mp = false
 }
 
 const cvs = document.getElementById('cvs')
@@ -401,10 +400,7 @@ let SEED = 0
 
 let mx = 0
 let my = 0
-let _mx = 0
-let _my = 0
 let mp = false
-let _mp = false
 let mm = false
 
 const KEYWORD = 'JoachimFordIoMissionData'
@@ -426,14 +422,14 @@ const MOBILE = 'ontouchstart' in window
 
 say('intro')
 
-const song = new Audio('music.m4a')
-const bounce = new Audio('jump.wav')
-const pound = new Audio('pound.wav')
-const hit = new Audio('hit.wav')
-const collect = new Audio('coin.wav')
-const dash = new Audio('dash.wav')
-const spin = new Audio('spin.wav')
-const tone = new Audio('tone.wav')
+const song = new Audio('src/music.m4a')
+const bounce = new Audio('src/jump.wav')
+const pound = new Audio('src/pound.wav')
+const hit = new Audio('src/hit.wav')
+const collect = new Audio('src/coin.wav')
+const dash = new Audio('src/dash.wav')
+const spin = new Audio('src/spin.wav')
+const tone = new Audio('src/tone.wav')
 const SOUND = {}
 
 function muteSound(bool) {
@@ -449,7 +445,11 @@ function muteSound(bool) {
 }
 muteSound(true)
 
+let oldTouch = []
 function mobileControls(touches, bool) {
+    if (touches.length) oldTouch = touches
+    else touches = oldTouch
+
     for (let i = 0; i < touches.length; i ++) {
         const touch = touches[i]
         const mouse = {x:touch.clientX*dpr,y:touch.clientY*dpr,w:0,h:0}
@@ -480,7 +480,6 @@ function touchMove(e) {
 
 addEventListener('touchstart', e => {
     mp = true
-    _mp = true
     touchMove(e)
     mobileControls(e.touches, true)
 })
@@ -488,12 +487,11 @@ addEventListener('touchend', e => {
     mp = false
     mobileControls(e.touches, false)
 })
-addEventListener('touchleave', () => mp = false)
-
-addEventListener('mousedown', () => {
-    mp = true
-    _mp = true
+addEventListener('touchleave', e => {
+    mp = false
+    mobileControls(e.touches, false)
 })
+addEventListener('mousedown', () => mp = true)
 addEventListener('mouseup', () => mp = false)
 addEventListener('mousemove', e => MOVE(e.clientX, e.clientY))
 addEventListener('touchmove', e => touchMove(e))
