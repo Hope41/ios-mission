@@ -206,9 +206,12 @@ class Map {
 
         if (this.lev[this.curr].key != 0) {
             this.lev[this.curr].doors.start.locked = false
-            if (died && this.lev[this.curr].key.taken && !hero.justCollectedKey)
+            if (died && this.lev[this.curr].key.taken)
                 this.lev[this.curr].doors.start.locked = true
         }
+
+        if (!died)
+            hero.justCollectedKey = false
 
         if (this.curr != 'tgo' && this.curr != 'floor1' && this.curr != 'tutorial')
             localStorage.setItem(
