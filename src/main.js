@@ -445,26 +445,6 @@ function muteSound(bool) {
 }
 muteSound(true)
 
-let oldTouch = []
-function mobileControls(touches, bool) {
-    if (touches.length) oldTouch = touches
-    else touches = oldTouch
-
-    for (let i = 0; i < touches.length; i ++) {
-        const touch = touches[i]
-        const mouse = {x:touch.clientX*dpr,y:touch.clientY*dpr,w:0,h:0}
-
-        if (collide(mouse, {x:x1PAD-PADRAD,y:yPAD-PADRAD,w:PADRAD,h:PADRAD*2}))
-            key.left = bool
-        if (collide(mouse, {x:x1PAD,y:yPAD-PADRAD,w:PADRAD,h:PADRAD*2}))
-            key.right = bool
-        if (collide(mouse, {x:x2PAD-PADRAD,y:yPAD-PADRAD,w:PADRAD*2,h:PADRAD}))
-            key.up = bool
-        if (collide(mouse, {x:x2PAD-PADRAD,y:yPAD,w:PADRAD*2,h:PADRAD}))
-            key.down = bool
-    }
-}
-
 function MOVE(x, y) {
     mx = x * dpr
     my = y * dpr
@@ -478,18 +458,50 @@ function touchMove(e) {
     MOVE(touch.pageX, touch.pageY)
 }
 
+function cancelTouches(e) {
+    for (let i = 0; i < e.changedTouches.length; i ++) {
+        const release = key => {
+            if (key && key.identifier == e.changedTouches[i].identifier)
+                return false
+            return key
+        }
+
+        key.up = release(key.up)
+        key.down = release(key.down)
+        key.left = release(key.left)
+        key.right = release(key.right)
+    }
+}
+
 addEventListener('touchstart', e => {
+    e.preventDefault()
+
     mp = true
     touchMove(e)
-    mobileControls(e.touches, true)
+
+    for (let i = 0; i < e.changedTouches.length; i ++) {
+        const touch = e.changedTouches[i]
+        const mouse = {x:touch.clientX*dpr,y:touch.clientY*dpr,w:0,h:0}
+
+        if (collide(mouse, {x:x1PAD-PADRAD,y:yPAD-PADRAD,w:PADRAD,h:PADRAD*2}))
+            key.left = touch
+        if (collide(mouse, {x:x1PAD,y:yPAD-PADRAD,w:PADRAD,h:PADRAD*2}))
+            key.right = touch
+        if (collide(mouse, {x:x2PAD-PADRAD,y:yPAD-PADRAD,w:PADRAD*2,h:PADRAD}))
+            key.up = touch
+        if (collide(mouse, {x:x2PAD-PADRAD,y:yPAD,w:PADRAD*2,h:PADRAD}))
+            key.down = touch
+    }
 })
 addEventListener('touchend', e => {
+    e.preventDefault()
     mp = false
-    mobileControls(e.touches, false)
+    cancelTouches(e)
 })
 addEventListener('touchleave', e => {
+    e.preventDefault()
     mp = false
-    mobileControls(e.touches, false)
+    cancelTouches(e)
 })
 addEventListener('mousedown', () => mp = true)
 addEventListener('mouseup', () => mp = false)
