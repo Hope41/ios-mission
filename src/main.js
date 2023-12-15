@@ -279,7 +279,7 @@ function update(milliseconds) {
     clear()
 
     // MOBILE CONTROL PAD
-    if (MOBILE || 1) {
+    if (MOBILE) {
         PADRAD = box * 3
         x1PAD = box + PADRAD
         x2PAD = cvs.width - box - PADRAD
