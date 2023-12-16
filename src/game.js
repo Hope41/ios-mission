@@ -245,7 +245,7 @@ class Game {
         if (chat.active) chat.update()
 
         // HELPER TUTORIAL
-        if (!help && map.curr == 'tgo' && 0) {
+        if (!help && map.curr == 'tgo') {
             const yPos = box * 2.2
 
             ctx.fillStyle = '#111'
