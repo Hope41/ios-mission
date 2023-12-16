@@ -213,13 +213,21 @@ class Map {
         if (!died)
             hero.justCollectedKey = false
 
-        if (this.curr != 'tgo' && this.curr != 'floor1' && this.curr != 'tutorial')
+        if (this.curr != 'tgo' && this.curr != 'floor1' && this.curr != 'tutorial') {
+            let curr = this.curr
+            if (curr == 'beach') curr = 'floor2'
+            if (curr == 'ship' || curr == 'boss') curr = 'floor3'
+            if (curr == 'jungle') curr = 'floor4'
+            if (curr == 'jungleBoss') curr = 'floor5'
+            if (curr == 'city') curr = 'floor6'
+
             localStorage.setItem(
                 KEYWORD,
                 game.totalMinutes+','+
                 game.totalDeaths+','+
                 game.totalCoinsCollected+','+
-                this.curr)
+                curr)
+        }
     }
 
     makeItem(item, x = 0, y = 0) {
@@ -789,8 +797,8 @@ class Map {
 
         const staff = new Staff(20, 33, true)
         staff.control = () => {
-            if (hero.x > staff.x - 3 && !spoken['staff5PASS1']) {
-                hero.x = staff.x - 3
+            if ((hero.x < staff.x + 3 && !spoken['staff5PASS1'])) {
+                hero.x = staff.x + 3
                 if (!hero.in_air) say('staff5PASS1', staff)
             }
         }

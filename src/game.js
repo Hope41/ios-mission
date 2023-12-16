@@ -35,7 +35,7 @@ class Game {
         for (let i = 0; i < image_list.length; i ++) generateImage(image_list[i])
 
         map.loadLevels()
-        map.setLevel('tgo', 'start')
+        map.setLevel('council', 'start')
     }
 
     resize() {
@@ -145,6 +145,53 @@ class Game {
         ctx.fillRect(helpx + box * .8, HELPGAP + box * .8, box * .3, box * .5)
         ctx.fillRect(helpx + box * .8, HELPGAP + box * 1.45, box * .3, box * .3)
 
+        // VOLUME
+        const volx = cvs.width - HELP * 2 - HELPGAP * 2
+        let volHover = false
+
+        if (collide({x:mx,y:my,w:0,h:0}, {x:volx,y:HELPGAP,w:HELP,h:HELP})) {
+            document.body.style.cursor = 'pointer'
+            volHover = true
+            if (mp) {
+                if (SOUND.muted) {
+                    muteSound(false)
+                    song.play()
+                    song.loop = true
+                }
+                else {
+                    muteSound(true)
+                    song.pause()
+                }
+
+                mp = false
+                key.press = false
+            }
+        }
+
+        ctx.fillStyle = '#777'
+        if (volHover) ctx.fillStyle = '#333'
+        ctx.fillRect(volx - sh, HELPGAP + sh, HELP, HELP)
+
+        ctx.fillStyle = '#444'
+        if (volHover) ctx.fillStyle = '#000'
+        ctx.fillRect(volx, HELPGAP, HELP, HELP)
+
+        ctx.fillStyle = '#fff'
+        ctx.fillRect(volx + box * .3, HELPGAP + box * .6, box * .4, box * .8)
+        ctx.fillRect(volx + box * .7, HELPGAP + box * .45, box * .45, box * 1.1)
+        ctx.fillRect(volx + box * 1.3, HELPGAP + box * .7, box * .15, box * .6)
+        ctx.fillRect(volx + box * 1.6, HELPGAP + box * .6, box * .15, box * .8)
+
+        if (SOUND.muted) {
+            ctx.strokeStyle = '#a00'
+            ctx.lineWidth = box * .3
+            ctx.beginPath()
+            ctx.moveTo(volx + box * 2, HELPGAP)
+            ctx.lineTo(volx, HELPGAP + box * 2)
+            ctx.stroke()
+        }
+
+        // HELP BOX
         if (help) {
             ctx.textAlign = 'center'
             const W = box * 18
@@ -194,57 +241,11 @@ class Game {
             ctx.textAlign = 'left'
         }
 
-        // VOLUME
-        const volx = cvs.width - HELP * 2 - HELPGAP * 2
-        let volHover = false
-
-        if (collide({x:mx,y:my,w:0,h:0}, {x:volx,y:HELPGAP,w:HELP,h:HELP})) {
-            document.body.style.cursor = 'pointer'
-            volHover = true
-            if (mp) {
-                if (SOUND.muted) {
-                    muteSound(false)
-                    song.play()
-                    song.loop = true
-                }
-                else {
-                    muteSound(true)
-                    song.pause()
-                }
-
-                mp = false
-                key.press = false
-            }
-        }
-
-        ctx.fillStyle = '#777'
-        if (volHover) ctx.fillStyle = '#333'
-        ctx.fillRect(volx - sh, HELPGAP + sh, HELP, HELP)
-
-        ctx.fillStyle = '#444'
-        if (volHover) ctx.fillStyle = '#000'
-        ctx.fillRect(volx, HELPGAP, HELP, HELP)
-
-        ctx.fillStyle = '#fff'
-        ctx.fillRect(volx + box * .3, HELPGAP + box * .6, box * .4, box * .8)
-        ctx.fillRect(volx + box * .7, HELPGAP + box * .45, box * .45, box * 1.1)
-        ctx.fillRect(volx + box * 1.3, HELPGAP + box * .7, box * .15, box * .6)
-        ctx.fillRect(volx + box * 1.6, HELPGAP + box * .6, box * .15, box * .8)
-
-        if (SOUND.muted) {
-            ctx.strokeStyle = '#a00'
-            ctx.lineWidth = box * .3
-            ctx.beginPath()
-            ctx.moveTo(volx + box * 2, HELPGAP)
-            ctx.lineTo(volx, HELPGAP + box * 2)
-            ctx.stroke()
-        }
-
         // CHAT
         if (chat.active) chat.update()
 
         // HELPER TUTORIAL
-        if (map.curr == 'tgo') {
+        if (!help && map.curr == 'tgo') {
             const yPos = box * 2.2
 
             ctx.fillStyle = '#111'
@@ -255,14 +256,31 @@ class Game {
             ctx.font = box * .7 + 'px font, sans-serif'
 
             if (hero.x < 35) {
-                ctx.fillText('Use the left and right arrow', cvs.width / 2, yPos)
-                ctx.fillText('keys (A and D) to move.', cvs.width / 2, yPos + box)
+                if (MOBILE) {
+                    ctx.fillText('Use the pad on the left', cvs.width / 2, yPos)
+                    ctx.fillText('to move left and right.', cvs.width / 2, yPos + box)
+                }
+                else {
+                    ctx.fillText('Use the left and right arrow', cvs.width / 2, yPos)
+                    ctx.fillText('keys (A and D) to move.', cvs.width / 2, yPos + box)
+                }
             }
-            else if (hero.x < 90)
-                ctx.fillText('Press the up key (W) to jump.', cvs.width / 2, yPos)
+            else if (hero.x < 90) {
+                if (MOBILE) {
+                    ctx.fillText('Tap the top of the', cvs.width / 2, yPos)
+                    ctx.fillText('right pad to jump.', cvs.width / 2, yPos + box)
+                }
+                else ctx.fillText('Press the up key (W) to jump.', cvs.width / 2, yPos)
+            }
             else {
-                ctx.fillText('Press the down key (S) to interact', cvs.width / 2, yPos)
-                ctx.fillText('with signs, doors or people.', cvs.width / 2, yPos + box)
+                if (MOBILE) {
+                    ctx.fillText('Tap the base of the right pad to', cvs.width / 2, yPos)
+                    ctx.fillText('interact with signs, doors or people.', cvs.width / 2, yPos + box)
+                }
+                else {
+                    ctx.fillText('Press the down key (S) to interact', cvs.width / 2, yPos)
+                    ctx.fillText('with signs, doors or people.', cvs.width / 2, yPos + box)
+                }
             }
             ctx.textAlign = 'left'
         }

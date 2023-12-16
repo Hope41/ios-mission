@@ -1,7 +1,7 @@
 'use strict'
 
 class CannonBall extends Base {
-    constructor(x, y, speed_x, speed_y, ship = false, col = [.2, .2, .2]) {
+    constructor(x, y, speed_x, speed_y, ship = false, col = [.2, .2, .2], deadly = true) {
         super(x, y)
 
         this.speed_x = speed_x
@@ -13,6 +13,8 @@ class CannonBall extends Base {
         this.h = 1.8
         this.x = x - this.w / 2
         this.y = y - this.h / 2
+
+        this.deadly = deadly
 
         this.lifetime = 150
         this.do_kill = 0
@@ -53,7 +55,7 @@ class CannonBall extends Base {
         this.speed_x *= Math.pow(.98, dt)
         this.speed_y += GRAVITY * dt
 
-        if (!this.do_kill && !hero.offensive && collide(hero.box, this))
+        if (this.deadly && !this.do_kill && !hero.offensive && collide(hero.box, this))
             hero.injure(this.damage)
 
         // explode

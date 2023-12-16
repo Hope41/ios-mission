@@ -342,7 +342,7 @@ function update(milliseconds) {
         ctx.fillText(game.totalMinutes + ' minutes taken', cvs.width / 2, cvs.height / 2 + box * 2)
     }
 
-    else game.totalMinutes = Math.ceil((time / 600) + game.timeOft)
+    else game.totalMinutes = Math.ceil((time / 3600) + game.timeOft)
 
     mm = false
 }
@@ -368,7 +368,7 @@ let yPAD = 0
 const padBlob = {x: 0, y: 0}
 let end = 0
 let start = false
-let blaze = 1
+let blaze = 0
 let blazeSpeed = 0
 let blazeY = 0
 let know = 0

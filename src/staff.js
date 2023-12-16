@@ -35,6 +35,12 @@ class Staff extends Base {
         this.arrow.active = false
 
         this.world = map.curr
+        this.eyeSize = random(.5, .6, 0)
+        this.pupilSize = random(.13, .15, 0)
+        this.legHeight = random(.55, .65, 0)
+
+        const arr = rain(SEED)
+        this.eyeCol = rgb(arr[0] * .2, arr[1] * .5, arr[2] * .6)
 
         this.applyToCells()
     }
@@ -130,11 +136,11 @@ class Staff extends Base {
             }
         }
 
-        const EYE = .54
+        const EYE = this.eyeSize
         const PAD = .06
-        const PUPIL = .14
+        const PUPIL = this.pupilSize
         const W = .065
-        const LEG_H = .6
+        const LEG_H = this.legHeight
         const LEG_APART = .5
         const ARM_H = .6
 
@@ -199,7 +205,7 @@ class Staff extends Base {
             if (pupilY > mark) pupilY = mark
             else if (pupilY < -mark) pupilY = -mark
 
-            let col = rgb(0, 0, 0)
+            let col = this.eyeCol
             if (this.grumpy) col = rgb(.2, 0, 0)
 
             ctx.fillStyle = col

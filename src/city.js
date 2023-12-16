@@ -984,13 +984,18 @@ class Cage extends Base {
         ctx.fillStyle = rgb(.4, .4, .4)
         this.rect(this.X, this.oft + this.Y - this.H, this.W, barw)
         this.rect(this.X, this.oft + this.Y - barw, this.W, barw)
+
         for (let i = 0; i < bars; i ++)
             this.rect(this.X + i * gap, this.oft + this.Y - this.H, barw, this.H)
 
-        for (let X = 0; X < Math.ceil(this.w); X ++) {
-            for (let Y = 0; Y < Math.ceil(this.h); Y ++) {
-                map.makeItem(this, this.x + X, this.y + Y)
-            }
+        for (let X = 0; X < Math.ceil(this.w); X += 2) {
+            map.makeItem(this, this.x + X, this.y)
+            map.makeItem(this, this.x + X, this.y + Math.ceil(this.h))
+        }
+
+        for (let Y = 0; Y < Math.ceil(this.h); Y += 2) {
+            map.makeItem(this, this.x, this.y + Y)
+            map.makeItem(this, this.x + Math.ceil(this.w), this.y + Y)
         }
     }
 }

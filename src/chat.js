@@ -227,7 +227,7 @@ function say(key, man = 'none', oneOff = true) {
         if (key == 'council2') {
             chat.say(man[0], MAN, ['OI!! What do you think you\'re doing??!!'])
             chat.say(hero, HERO, ['Oh, hi. Could you please unlock the prison doors? I need to save my friends.'])
-            chat.say(man[0], MAN, ['Oh, the cheek of him! Simply outrageous. I can\'t be dealing with any more of Drillo\'s friends.'])
+            chat.say(man[0], MAN, ['Oh, the cheek of him! Simply outrageous. I can\'t cope with any more of Drillo\'s friends.'])
             chat.say(man[1], MAN, ['How did he even get up here?'])
             chat.say(man[0], MAN, ['Never mind that, my friend. Now\'s our chance to catch him off his guard.'])
             return
