@@ -35,7 +35,7 @@ class Game {
         for (let i = 0; i < image_list.length; i ++) generateImage(image_list[i])
 
         map.loadLevels()
-        map.setLevel('council', 'start')
+        map.setLevel('tgo', 'start')
     }
 
     resize() {
@@ -245,7 +245,7 @@ class Game {
         if (chat.active) chat.update()
 
         // HELPER TUTORIAL
-        if (!help && map.curr == 'tgo') {
+        if (!help && map.curr == 'tgo' && 0) {
             const yPos = box * 2.2
 
             ctx.fillStyle = '#111'
