@@ -347,7 +347,6 @@ function update(milliseconds) {
     mm = false
 }
 
-const cvs = document.getElementById('cvs')
 const ctx = cvs.getContext('2d')
 document.body.appendChild(cvs)
 const dpr = devicePixelRatio
