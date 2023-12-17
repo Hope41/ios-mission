@@ -32,7 +32,7 @@ function update(milliseconds) {
     // don't normalise speed if framerate is lower than 60fps
     if (DT > 1) DT = 1
 
-    time = milliseconds / 16
+    time = milliseconds / 16 / DT
     dt = DT
 
     document.body.style.cursor = 'default'
