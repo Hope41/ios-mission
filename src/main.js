@@ -31,8 +31,8 @@ function update(milliseconds) {
     DT = milliseconds - (time * 16)
     // don't normalise speed if framerate is lower than 60fps
     if (DT > 1) DT = 1
-    time += DT//(milliseconds / 16)
 
+    time = milliseconds / 16 / DT
     dt = DT
 
     document.body.style.cursor = 'default'
@@ -396,6 +396,7 @@ let box = 1
 
 let dt = 0
 let DT = 0
+
 let time = 0
 let SEED = 0
 
