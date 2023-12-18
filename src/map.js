@@ -989,6 +989,8 @@ class Map {
                 seq.council.props.push(tgo[2])
                 seq.council.props.push(tgo[3])
                 seq.council.props.push(tgo[4])
+                seq.council.props.push(lever)
+                seq.council.props.push(door)
                 seq.council.props.push(can)
             }
         }
