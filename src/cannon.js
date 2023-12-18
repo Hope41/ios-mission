@@ -26,7 +26,7 @@ class Cannon extends Base {
             new CannonBall(
                 this.x + this.w / 2 - x_dir * this.w,
                 this.y - y_dir * 3.5,
-                vx, vy, false, [.1, .1, .1], true)
+                vx, vy, false, [.1, .1, .1], false)
 
             cam.boom(20, .5, .5)
 
