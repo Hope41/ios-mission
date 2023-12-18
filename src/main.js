@@ -311,11 +311,6 @@ function update(milliseconds) {
     }
 
     if (end) {
-        if (end <= 1)
-            game.endTime = time
-
-        game.totalMinutes = Math.ceil((game.endTime - game.startTime) / 60000)
-
         end += dt
         const fade = .003
 
@@ -342,7 +337,7 @@ function update(milliseconds) {
         ctx.fillText(game.totalMinutes + ' minutes taken', cvs.width / 2, cvs.height / 2 + box * 2)
     }
 
-    else game.totalMinutes = Math.ceil((time / 360) + game.timeOft)
+    else game.totalMinutes = Math.ceil((time / 3600) + game.timeOft)
 
     mm = false
 }
