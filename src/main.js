@@ -342,7 +342,7 @@ function update(milliseconds) {
         ctx.fillText(game.totalMinutes + ' minutes taken', cvs.width / 2, cvs.height / 2 + box * 2)
     }
 
-    else game.totalMinutes = Math.ceil((time / 3600) + game.timeOft)
+    else game.totalMinutes = Math.ceil((time / 360) + game.timeOft)
 
     mm = false
 }
