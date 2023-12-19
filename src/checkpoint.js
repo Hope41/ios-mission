@@ -31,8 +31,8 @@ class Checkpoint extends Base {
 
         // set hero to checkpoint
         hero.collisionBox()
-        hero.x = this.x + this.w / 2 - hero.box.w / 2
-        hero.y = this.y + this.h - hero.box.h
+        hero.x = this.x + this.w / 2 - hero.w / 2
+        hero.y = this.y + this.h - hero.h
         hero.collisionBox()
     }
 

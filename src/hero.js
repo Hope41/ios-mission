@@ -99,6 +99,7 @@ class Hero extends Base {
         this.speed_y = 0
 
         const pos = map.lev[map.curr].doors.start
+        this.collisionBox()
         this.x = pos.x
         this.y = pos.y
     }

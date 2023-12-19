@@ -201,14 +201,14 @@ class Game {
 
             if (cvs.height > cvs.width)
                 H = cvs.height / 20 * 18
-
             help += dt
+
             ctx.fillStyle = rgb(.1, .1, .1, help / 20)
             ctx.fillRect(X, Y, W, H)
 
             ctx.fillStyle = rgb(1, 1, 1, help / 20)
             ctx.font = box + 'px font, sans-serif'
-            ctx.fillText('* HELP *', cvs.width / 2, box * 3)
+            ctx.fillText('* CONTROLS *', cvs.width / 2, box * 3)
 
             ctx.font = box * .6 + 'px font, sans-serif'
             ctx.fillText('Use the WASD, ZQSD or arrow', cvs.width / 2, box * 4.3)
@@ -233,6 +233,29 @@ class Game {
             ctx.fillText('Use the down key (S) to interact', cvs.width / 2, box * 16.5)
             ctx.fillText('with signs, doors, and people.', cvs.width / 2, box * 17)
 
+            // RESCUE
+            const resetCheckX = X + box * .7
+            const resetCheckY = Y + box * .7
+            const resetCheckS = HELP
+            let rescueHover = false
+            if (collide({x:mx,y:my,w:0,h:0}, {x:resetCheckX,y:resetCheckY,w:resetCheckS,h:resetCheckS})) {
+                document.body.style.cursor = 'crosshair'
+                rescueHover = true
+                if (mp) {
+                    help = 0
+                    hero.kill()
+                    mp = false
+                    key.press = false
+                }
+            }
+            ctx.fillStyle = rgb(.3, .2, .2, help / 20)
+            if (rescueHover) ctx.fillStyle = rgb(.4, .3, .3, help / 20)
+            ctx.fillRect(resetCheckX, resetCheckY, resetCheckS, resetCheckS)
+            ctx.fillStyle = rgb(1, .2, .2, help / 20)
+            ctx.font = box * .8 + 'px font, sans-serif'
+            ctx.fillText('RES', resetCheckX + resetCheckS / 2, resetCheckY + resetCheckS * .45)
+            ctx.fillText('CUE', resetCheckX + resetCheckS / 2, resetCheckY + resetCheckS * .85)
+
             if (mp || key.press)
                 help = 0
             mp = false
@@ -255,7 +278,37 @@ class Game {
             ctx.fillStyle = '#fff'
             ctx.font = box * .7 + 'px font, sans-serif'
 
-            if (hero.x < 35) {
+            if (hero.x < -3000)
+                ctx.fillText('Turn around!', cvs.width / 2, yPos)
+
+            else if (hero.x < -2000) {
+                if (hero.x > -2500) {
+                    ctx.fillText('Seriously.', cvs.width / 2, yPos)
+                    ctx.fillText('There\'s nothing here.', cvs.width / 2, yPos + box)
+                }
+            }
+
+            else if (hero.x < -1000) {
+                if (hero.x > -1500)
+                    ctx.fillText('Wow, you\'re patient.', cvs.width / 2, yPos)
+            }
+
+            else if (hero.x < -500) {
+                if (hero.x > -550) {
+                    ctx.fillText('Hah. I think you\'d', cvs.width / 2, yPos)
+                    ctx.fillText('better turn around now.', cvs.width / 2, yPos + box)
+                }
+            }
+
+            else if (hero.x < -250)
+                ctx.fillText('This world goes on forever.', cvs.width / 2, yPos)
+
+            else if (hero.x < -150) {
+                ctx.fillText('The tower is in the', cvs.width / 2, yPos)
+                ctx.fillText('other direction by the way.', cvs.width / 2, yPos + box)
+            }
+
+            else if (hero.x < 35) {
                 if (MOBILE) {
                     ctx.fillText('Use the pad on the left', cvs.width / 2, yPos)
                     ctx.fillText('to move left and right.', cvs.width / 2, yPos + box)

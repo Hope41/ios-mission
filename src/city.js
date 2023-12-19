@@ -1075,3 +1075,49 @@ class Lever extends Base {
         ctx.fill()
     }
 }
+
+class DirectionArrow extends Base {
+    constructor(x, y) {
+        super(x, y)
+
+        this.w = 2
+        this.h = 1.5
+
+        this.y -= this.h
+
+        const baseData = [
+            0, 0,
+            .7, 0,
+            .7, -.15,
+            1.2, .25,
+            .7, .65,
+            .7, .5,
+            0, .5,
+            0, 0
+        ]
+        this.data = []
+
+        const sizing = 1.5
+        for (let i = 0; i < baseData.length; i += 2) {
+            this.data.push(this.x + baseData[i] * sizing)
+            this.data.push(this.y + baseData[i + 1] * sizing)
+        }
+
+        this.applyToCells()
+    }
+
+    update() {
+        
+    }
+
+    draw() {
+        ctx.fillStyle = rgb(.3, .2, .1)
+        fillRect(this.x + this.w / 2 - .6, this.y, .5, this.h)
+
+        ctx.fillStyle = rgb(.45, .3, .15)
+        lineFill(this.data)
+
+        ctx.strokeStyle = rgb(.35, .2, .05)
+        line(this.data, .05)
+    }
+}

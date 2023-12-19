@@ -492,7 +492,9 @@ class Map {
         }
 
         const W = this.lev[this.curr].w
-        this.lev[this.curr].doors.start = {x: 0, y: ground.y - 3}
+        this.lev[this.curr].doors.start = {x: 14, y: ground.y - 2}
+        new DirectionArrow(7, ground.y)
+
         for (let x = 0; x < W; x ++) {
 
             // place headquarters
@@ -2227,6 +2229,8 @@ class Map {
         new NormalDoor(76, 14, {x: 78, y: 6}, false, 'wooden')
         new NormalDoor(80, 29, {x: 62, y: 29}, false, 'wooden')
         new NormalDoor(62, 29, {x: 80, y: 29}, false, 'wooden')
+
+        // new NormalDoor(6, 8, {x: 81, y: 54}, false, 'wooden')
 
         new Checkpoint(58.5, 29)
 
