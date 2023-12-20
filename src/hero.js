@@ -299,6 +299,12 @@ class Hero extends Base {
                 this.dash.execute = true
                 this.dash.spin += this.dash.rot_speed * this.dash.dir * DT
                 this.speed_x += this.dash.dir * this.dash.move_speed * DT
+
+                if (key.up && this.in_air) {
+                    jump(this, .35)
+                    bounce.play()
+                    this.dash.spin = whole
+                }
     
                 if (Math.abs(this.dash.spin) >= whole) {
                     this.dash.timer = this.dash.regen
