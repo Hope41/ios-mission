@@ -56,7 +56,7 @@ class Hero extends Base {
         this.eyeTimer = random(10, 30)
 
         this.leg_h = .5
-        this.dash = {dir: 0, spin: 0, timer: 0, regen: 20, rot_speed: .32, move_speed: .07, execute: false}
+        this.dash = {dir: 0, spin: 0, timer: 0, regen: 20, rot_speed: .32, move_speed: .07, execute: false, rollOff: false}
         this.pound = {spin: 0, plummet: false, force: .7, spin_speed: .4, active: false}
         this.swim = {move: false, swim: 0, speed: .02, spin: 0, enabled: false, surface: false}
         this.waterSpin = {go: 0, speed: .03, force: .4, active: false, regen: 40, timer: 0}
@@ -277,6 +277,8 @@ class Hero extends Base {
     }
 
     control() {
+        if (!this.in_air) this.dash.rollOff = false
+
         // player cannot stand in a tunnel
         let duck = false
 
@@ -294,18 +296,13 @@ class Hero extends Base {
 
         if (this.animate.new == 'duck') {
             if (this.dash.dir) {
+                if (!this.in_air) this.dash.rollOff = true
                 if (!this.dash.execute) dash.play()
 
                 this.dash.execute = true
                 this.dash.spin += this.dash.rot_speed * this.dash.dir * DT
                 this.speed_x += this.dash.dir * this.dash.move_speed * DT
 
-                if (key.up && this.in_air) {
-                    jump(this, .35)
-                    bounce.play()
-                    this.dash.spin = whole
-                }
-    
                 if (Math.abs(this.dash.spin) >= whole) {
                     this.dash.timer = this.dash.regen
                     this.dash.dir = 0
@@ -320,6 +317,18 @@ class Hero extends Base {
             this.dash.timer = 0
         }
         if (!this.in_air) this.dash.execute = false
+
+        if (this.dash.rollOff && key.up && this.in_air) {
+            jump(this, .35)
+            bounce.play()
+            this.dash.spin = whole
+            this.dash.rollOff = false
+            this.dash.execute = false
+            this.dash.timer = this.dash.regen
+            this.dash.dir = 0
+            this.dash.spin = 0
+            key.down = false
+        }
 
         if (this.animate.new == 'pound' && !this.dash.execute) {
             if (this.pound.plummet) this.speed_y = this.pound.force
