@@ -471,11 +471,11 @@ class Hero extends Base {
                 const joint_new = body_goal[this.bodyKey(i)]
                 const dist = joint_new - joint_old
 
-                this.body[this.bodyKey(i)] = joint_old + (dist * this.animate_stage)
+                this.body[this.bodyKey(i)] = joint_old + (dist * (.5 + Math.cos(this.animate_stage * Math.PI + Math.PI) * .5))
             }
 
             // cancel animation when complete
-            if (this.animate_stage >= 1 - this.animate_speed) this.animate_stage = 0
+            if (this.animate_stage >= 1) this.animate_stage = 0
         }
 
         // reset goals if goal changes during transition
