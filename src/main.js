@@ -53,6 +53,49 @@ function update(milliseconds) {
         }
         map.draw()
 
+        const sh = box * .1
+        const HELPGAP = box * .6
+        const HELP = box * 2
+        const volx = cvs.width - HELP - HELPGAP
+        let volHover = false
+        if (collide({x:mx,y:my,w:0,h:0}, {x:volx,y:HELPGAP,w:HELP,h:HELP})) {
+            document.body.style.cursor = 'pointer'
+            volHover = true
+            if (mp) {
+                if (SOUND.muted) {
+                    muteSound(false)
+                    song.play()
+                    song.loop = true
+                }
+                else {
+                    muteSound(true)
+                    song.pause()
+                }
+
+                mp = false
+                key.press = false
+            }
+        }
+        ctx.fillStyle = '#777'
+        if (volHover) ctx.fillStyle = '#333'
+        ctx.fillRect(volx - sh, HELPGAP + sh, HELP, HELP)
+        ctx.fillStyle = '#444'
+        if (volHover) ctx.fillStyle = '#000'
+        ctx.fillRect(volx, HELPGAP, HELP, HELP)
+        ctx.fillStyle = '#fff'
+        ctx.fillRect(volx + box * .3, HELPGAP + box * .6, box * .4, box * .8)
+        ctx.fillRect(volx + box * .7, HELPGAP + box * .45, box * .45, box * 1.1)
+        ctx.fillRect(volx + box * 1.3, HELPGAP + box * .7, box * .15, box * .6)
+        ctx.fillRect(volx + box * 1.6, HELPGAP + box * .6, box * .15, box * .8)
+        if (SOUND.muted) {
+            ctx.strokeStyle = '#a00'
+            ctx.lineWidth = box * .3
+            ctx.beginPath()
+            ctx.moveTo(volx + box * 2, HELPGAP)
+            ctx.lineTo(volx, HELPGAP + box * 2)
+            ctx.stroke()
+        }
+
         const tall = cvs.height > cvs.width
         ctx.textAlign = 'center'
 

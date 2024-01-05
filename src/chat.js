@@ -158,7 +158,7 @@ function say(key, man = 'none', oneOff = true) {
             chat.say(hero, HERO, ['I\'m not a loser.', 'I just want to save my friends and get out of here.'])
             chat.say(man, MAN, ['Pah! You\'re never going make it through in one piece. This is the tower of The Great Ominous!!!'])
             chat.say(hero, HERO, ['Who is the Great Ominous?'])
-            chat.say(man, MAN, ['The worst evil cooperation in existence. The society is currently made up of five members.', 'You\'ll never get past them.'])
+            chat.say(man, MAN, ['The worst evil corporation in existence. The society is currently made up of five members.', 'You\'ll never get past them.'])
             return
         }
 
@@ -177,7 +177,7 @@ function say(key, man = 'none', oneOff = true) {
             chat.say(man, MAN, ['Hmm. Who are you down there?'])
             chat.say(hero, HERO, ['Hi! I\'m Io. Do you mind lending me the Teleport Key?'])
             chat.say(man, MAN, ['Hah, I\'m not going to give you that very easily. It\'s my only possesion!'])
-            chat.say(hero, HERO, ['Oh, I\'m sorry. But it\'s really improtant. I need to save my friends!'])
+            chat.say(hero, HERO, ['Oh, I\'m sorry. But it\'s really important. I need to save my friends!'])
             chat.say(man, MAN, ['Ugh! Why should I care about you and your friends? It can only mean trouble as far as I\'m concerned.', 'Prepare for revenge!'])
             return
         }
