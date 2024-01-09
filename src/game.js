@@ -268,73 +268,57 @@ class Game {
         if (chat.active) chat.update()
 
         // HELPER TUTORIAL
-        if (!help && map.curr == 'tgo') {
+        if (!help) {
             const yPos = box * 2.2
 
-            ctx.fillStyle = '#111'
-            ctx.fillRect(cvs.width / 2 - box * 9, box, box * 18, box * 3)
+            const drawBox = () => {
+                ctx.fillStyle = '#111'
+                ctx.fillRect(cvs.width / 2 - box * 9, box, box * 18, box * 3)
+    
+                ctx.textAlign = 'center'
+                ctx.fillStyle = '#fff'
+                ctx.font = box * .7 + 'px font, sans-serif'
+            }
 
-            ctx.textAlign = 'center'
-            ctx.fillStyle = '#fff'
-            ctx.font = box * .7 + 'px font, sans-serif'
 
-            if (hero.x < -3000)
-                ctx.fillText('Turn around!', cvs.width / 2, yPos)
-
-            else if (hero.x < -2000) {
-                if (hero.x > -2500) {
-                    ctx.fillText('Seriously.', cvs.width / 2, yPos)
-                    ctx.fillText('There\'s nothing here.', cvs.width / 2, yPos + box)
+            if (map.curr == 'tgo' && hero.x > -50) {
+                drawBox()
+                if (hero.x < 35) {
+                    if (MOBILE) {
+                        ctx.fillText('Use the pad on the left', cvs.width / 2, yPos)
+                        ctx.fillText('to move left and right.', cvs.width / 2, yPos + box)
+                    }
+                    else {
+                        ctx.fillText('Use the left and right arrow', cvs.width / 2, yPos)
+                        ctx.fillText('keys (A and D) to move.', cvs.width / 2, yPos + box)
+                    }
                 }
-            }
-
-            else if (hero.x < -1000) {
-                if (hero.x > -1500)
-                    ctx.fillText('Wow, you\'re patient.', cvs.width / 2, yPos)
-            }
-
-            else if (hero.x < -500) {
-                if (hero.x > -550) {
-                    ctx.fillText('Hah. I think you\'d', cvs.width / 2, yPos)
-                    ctx.fillText('better turn around now.', cvs.width / 2, yPos + box)
-                }
-            }
-
-            else if (hero.x < -250)
-                ctx.fillText('This world goes on forever.', cvs.width / 2, yPos)
-
-            else if (hero.x < -150) {
-                ctx.fillText('The tower is in the', cvs.width / 2, yPos)
-                ctx.fillText('other direction by the way.', cvs.width / 2, yPos + box)
-            }
-
-            else if (hero.x < 35) {
-                if (MOBILE) {
-                    ctx.fillText('Use the pad on the left', cvs.width / 2, yPos)
-                    ctx.fillText('to move left and right.', cvs.width / 2, yPos + box)
+                else if (hero.x < 90) {
+                    if (MOBILE) {
+                        ctx.fillText('Tap the top of the', cvs.width / 2, yPos)
+                        ctx.fillText('right pad to jump.', cvs.width / 2, yPos + box)
+                    }
+                    else ctx.fillText('Press the up key (W) to jump.', cvs.width / 2, yPos)
                 }
                 else {
-                    ctx.fillText('Use the left and right arrow', cvs.width / 2, yPos)
-                    ctx.fillText('keys (A and D) to move.', cvs.width / 2, yPos + box)
+                    if (MOBILE) {
+                        ctx.fillText('Tap the base of the right pad to', cvs.width / 2, yPos)
+                        ctx.fillText('interact with signs, doors or people.', cvs.width / 2, yPos + box)
+                    }
+                    else {
+                        ctx.fillText('Press the down key (S) to interact', cvs.width / 2, yPos)
+                        ctx.fillText('with signs, doors or people.', cvs.width / 2, yPos + box)
+                    }
                 }
             }
-            else if (hero.x < 90) {
-                if (MOBILE) {
-                    ctx.fillText('Tap the top of the', cvs.width / 2, yPos)
-                    ctx.fillText('right pad to jump.', cvs.width / 2, yPos + box)
-                }
-                else ctx.fillText('Press the up key (W) to jump.', cvs.width / 2, yPos)
+
+            if (hero.x < -50) {
+                drawBox()
+
+                ctx.fillText('Nothing over here.', cvs.width / 2, yPos)
+                ctx.fillText('Turn around!', cvs.width / 2, yPos + box)
             }
-            else {
-                if (MOBILE) {
-                    ctx.fillText('Tap the base of the right pad to', cvs.width / 2, yPos)
-                    ctx.fillText('interact with signs, doors or people.', cvs.width / 2, yPos + box)
-                }
-                else {
-                    ctx.fillText('Press the down key (S) to interact', cvs.width / 2, yPos)
-                    ctx.fillText('with signs, doors or people.', cvs.width / 2, yPos + box)
-                }
-            }
+
             ctx.textAlign = 'left'
         }
 
