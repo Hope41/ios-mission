@@ -1115,8 +1115,7 @@ class Map {
         hero.collisionBox()
     }
     beachGenerate() {
-        // 5
-        SEED = 12
+        SEED = 5
         const box = {
             top: 10,
             ground_bot: 14,
@@ -1195,7 +1194,7 @@ class Map {
             chamber: {
                 timer: {min: 15, max: 25, curr: 0},
                 size: {min: 6, max: 11},
-                maxAmount: 4 // max amount per ocean
+                maxAmount: 2 // max amount per ocean
             },
             underWater: 0 // how long the sea has been underwater for
         }
@@ -2316,6 +2315,7 @@ class Map {
         hero.collisionBox()
     }
     jungleGenerate() {
+        SEED = 1
         for (let x = 0; x < this.lev[this.curr].w; x ++) {
             for (let y = 0; y < this.lev[this.curr].h; y ++) this.add(x, y, AIR, {}, true)
         }
@@ -2942,6 +2942,7 @@ class Map {
         hero.collisionBox()
     }
     cityGenerate() {
+        SEED = 1
         const box = {
             ground: 50,
             min: 10
