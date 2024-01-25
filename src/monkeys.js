@@ -584,7 +584,7 @@ class MonkeyBoss extends Base {
                     this.recover += dt
             }
 
-            else if (!this.recover) hero.injure(.2)
+            else if (!this.recover) hero.injure(.13)
         }
 
         if (this.recover) {
