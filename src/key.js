@@ -24,7 +24,7 @@ class KeySlot extends Base {
     update() {
         if (this.boring && collide(hero, this) && this.active) {
             hero.key = true
-            this.coins = 0
+            hero.coins = 0
 
             puff(
                 this.x, this.y, this.w, this.h,

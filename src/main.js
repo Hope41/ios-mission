@@ -22,17 +22,14 @@ function control() {
     onkeyup = e => press(e, 0)
 }
 
-function update(milliseconds) {
+function update() {
     requestAnimationFrame(update)
 
     // implementing deltatime means the game will stay the same speed on all devices
-
-    // get time between frames for deltatime
-    DT = milliseconds - (time * 16)
-    // don't normalise speed if framerate is lower than 60fps
+    DT = (performance.now() - oldPerf) / 16
+    oldPerf = performance.now()
     if (DT > 1) DT = 1
-
-    time = milliseconds / 16 / DT
+    time = performance.now() / 16
     dt = DT
 
     document.body.style.cursor = 'default'
@@ -434,6 +431,7 @@ let box = 1
 
 let dt = 0
 let DT = 0
+let oldPerf = 0
 
 let time = 0
 let SEED = 0

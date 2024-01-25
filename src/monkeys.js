@@ -351,7 +351,10 @@ class Banana extends Base {
     
                     if (overlap.x) {
                         this.x -= overlap.x
-                        this.speedX = 0
+
+                        if (this.bad)
+                            this.speedX = -overlap.x
+                        else this.speedX = 0
                     }
                     else if (overlap.y) {
                         this.y -= overlap.y
@@ -388,7 +391,7 @@ class Banana extends Base {
             hero.speed_y += this.speedY * .1
 
             if (this.bad && this.air) {
-                hero.injure(.08)
+                hero.injure(.07)
                 game.filter = {r: 0, g: 0, b: 0, a: .1}
             }
         }
@@ -776,9 +779,9 @@ class MonkeyBoss extends Base {
 
         if (move < -Math.PI && !this.thrown) {
             const forceX = .23 + (armPos.x1 - (hero.x + hero.speed_x * 30 + hero.w * 2)) * .08
-            const forceY = .15 + (armPos.y1 - hero.y) * .06
+            const forceY = .15 + (armPos.y1 - hero.y) * .04
 
-            new Banana(armPos.x1, armPos.y1, -forceX, -forceY + random(-.1, 0, 0), true)
+            new Banana(armPos.x1, armPos.y1, -forceX, -forceY + random(-.2, 0, 0), true)
             this.thrown = true
         }
         if (this.banana == this.bananaCharge)
